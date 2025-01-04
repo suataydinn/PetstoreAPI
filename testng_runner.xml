@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="api_TestNG" verbose="1">
+    <listeners>
+        <!-- Emailable Reporter -->
+<!--        <listener class-name="org.testng.reporters.EmailableReporter2" />-->
+<!--         XML Reporter (Varsayılan raporlama)-->
+<!--        <listener class-name="org.testng.reporters.XMLReporter" />-->
+    </listeners>
+
+    <test name="api Test">
+        <classes>
+            <class name="tests.PetTests" />
+            <class name="tests.StoreTests" />
+            <class name="tests.UserTests" />
+        </classes>
+    </test>
+</suite>
