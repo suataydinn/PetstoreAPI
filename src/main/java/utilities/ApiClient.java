@@ -1,10 +1,7 @@
 package utilities;
 
-import com.mongodb.util.JSON;
-import io.restassured.RestAssured;
-import io.restassured.mapper.ObjectMapper;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
 import java.io.File;
 
@@ -22,19 +19,16 @@ public class ApiClient {
                 .response();
     }
 
-    public Response postWithString(String endpoint, String body) {
-        System.out.println("baseURI = " + baseURI);
+    public Response gettt(String endpoint) {
         return given()
-                .contentType("application/json")
-                .log().all()
-                .body(body)
+                .contentType(ContentType.JSON)  // Content type belirtme
+                .accept(ContentType.JSON)       // Accept header ekleme
                 .when()
-                .post(endpoint)
+                .get(endpoint)
                 .then()
                 .extract()
                 .response();
     }
-
 
     public Response post(String endpoint, Object body) {
         System.out.println("baseURI = " + baseURI);
@@ -43,6 +37,18 @@ public class ApiClient {
                 .body(body)
                 .when()
                 .post(endpoint)
+                .then()
+                .extract()
+                .response();
+    }
+
+    public Response updatePetWithForm(int petId, String name, String status) {
+        return given()
+                .contentType("application/x-www-form-urlencoded")
+                .formParam("name", name)
+                .formParam("status", status)
+                .when()
+                .post("/pet/" + petId)
                 .then()
                 .extract()
                 .response();
@@ -76,18 +82,6 @@ public class ApiClient {
         return given()
                 .when()
                 .delete(endpoint)
-                .then()
-                .extract()
-                .response();
-    }
-
-    public Response postWithAuth(String endpoint, Object body, String username, String password) {
-        return given()
-                .contentType("application/json")
-                .body(body)
-                .auth().basic(username, password)  // Basic auth kullanarak istek gönderiyoruz
-                .when()
-                .post(endpoint)
                 .then()
                 .extract()
                 .response();
