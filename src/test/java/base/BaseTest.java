@@ -44,13 +44,11 @@ public class BaseTest {
         } else if(result.getStatus() == ITestResult.SUCCESS){
             extentLogger.pass(result.getMethod().getMethodName());
         }
-        // Flush after each test
         report.flush();
     }
 
     @AfterTest
     public void tearDownTest(){
-        // Flush report at the end of the test suite
         report.flush();
     }
 }
